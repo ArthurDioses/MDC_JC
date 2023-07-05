@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
@@ -41,6 +44,8 @@ fun ContentMain() {
         modifier = Modifier.fillMaxSize(),
         containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
+            //This cannot be used in Material 3,
+            //BottomAppBar(cutoutShape = CircleShape)
             BottomAppBar {
                 CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
                     IconButton(onClick = { /*TODO*/ }) {
@@ -52,7 +57,15 @@ fun ContentMain() {
                     Icon(Icons.Filled.MoreVert, contentDescription = "Options")
                 }
             }
-        }
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = { /*TODO*/ }) {
+                Icon(Icons.Filled.Create, contentDescription = null)
+            }
+        },
+        floatingActionButtonPosition = FabPosition.Center
+        //This cannot be used in Material 3,
+        // isFloatingActionButtonDocked = true
     ) { padding ->
         Content(Modifier.padding(padding))
     }
