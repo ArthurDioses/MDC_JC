@@ -94,6 +94,23 @@ fun Content(modifier: Modifier = Modifier) {
                         )
                     )
                 )
+                var isCheckboxChecked by remember { mutableStateOf(false) }
+                var passwordValue by remember { mutableStateOf("") }
+
+                OutlinedTextField(
+                    value = passwordValue,
+                    onValueChange = { passwordValue = it },
+                    label = { Text(text = stringResource(id = R.string.card_password)) },
+                    singleLine = true,
+                    enabled = isCheckboxChecked,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            top = dimensionResource(id = R.dimen.common_padding_default),
+                            start = dimensionResource(id = R.dimen.common_padding_default),
+                            end = dimensionResource(id = R.dimen.common_padding_default)
+                        )
+                )
             }
         }
     }
