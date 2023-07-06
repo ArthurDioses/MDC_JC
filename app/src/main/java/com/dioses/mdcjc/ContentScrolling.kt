@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,6 +18,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -118,10 +120,8 @@ fun Content(modifier: Modifier = Modifier) {
                     label = { Text(text = stringResource(id = R.string.card_password)) },
                     singleLine = true,
                     enabled = isCheckboxChecked,
-                    visualTransformation =
-                    if (isPasswordVisible) VisualTransformation.None
-                    else
-                        PasswordVisualTransformation(),
+                    visualTransformation = if (isPasswordVisible) VisualTransformation.None
+                    else PasswordVisualTransformation(),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
@@ -138,9 +138,21 @@ fun Content(modifier: Modifier = Modifier) {
                             })
                     })
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Checkbox(checked = isCheckboxChecked,
+                    Checkbox(
+                        checked = isCheckboxChecked,
                         onCheckedChange = { isCheckboxChecked = it })
                     Text(text = stringResource(id = R.string.card_enable_pass))
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Text(text = stringResource(id = R.string.card_hide_fab))
+                    var isSwitchChecked by remember { mutableStateOf(true) }
+
+                    Switch(
+                        checked = isSwitchChecked,
+                        onCheckedChange = { isSwitchChecked = it },
+                        modifier = Modifier.padding(end = dimensionResource(id = R.dimen.common_padding_min))
+                    )
                 }
             }
         }
