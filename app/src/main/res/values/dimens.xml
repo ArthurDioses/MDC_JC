@@ -5,6 +5,7 @@
     <dimen name="text_margin">16dp</dimen>
 
     <dimen name="card_img_size">88dp</dimen>
+    <dimen name="card_padding_micro">4dp</dimen>
     <dimen name="card_padding_min">8dp</dimen>
     <dimen name="card_padding_default">16dp</dimen>
     <dimen name="card_img_cover_height">160dp</dimen>
