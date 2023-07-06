@@ -1,8 +1,5 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.dioses.mdcjc
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,12 +18,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.dioses.mdcjc.ui.theme.MDCJCTheme
 
 
@@ -38,6 +37,7 @@ fun ContentPreview() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
 @Composable
 fun Content(modifier: Modifier = Modifier) {
     Column(
@@ -49,13 +49,16 @@ fun Content(modifier: Modifier = Modifier) {
                 .padding(8.dp)
         ) {
             Column {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_shop),
+                var urlValue by remember { mutableStateOf("Valor inicial") }
+
+                GlideImage(
+                    model = urlValue,
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(dimensionResource(id = R.dimen.card_img_cover_height))
-                        .background(colorResource(id = R.color.teal_200))
+                        .background(colorResource(id = R.color.teal_200)),
+                    contentScale = ContentScale.Crop
                 )
                 Text(
                     text = stringResource(
@@ -66,7 +69,6 @@ fun Content(modifier: Modifier = Modifier) {
                         .padding(dimensionResource(id = R.dimen.common_padding_default)),
                     style = MaterialTheme.typography.headlineMedium
                 )
-                var urlValue by remember { mutableStateOf("Valor inicial") }
 
                 OutlinedTextField(
                     value = urlValue,
