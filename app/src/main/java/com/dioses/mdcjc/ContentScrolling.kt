@@ -34,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -63,9 +64,11 @@ fun Content(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
+        var colorMain by remember { mutableStateOf(Color.LightGray) }
         Card(
             modifier = Modifier
                 .fillMaxWidth()
+                .background(colorMain)
                 .padding(8.dp)
         ) {
             Column {
@@ -201,6 +204,20 @@ fun Content(modifier: Modifier = Modifier) {
                         .padding(vertical = dimensionResource(id = R.dimen.common_padding_middle))
                 )
 
+                val colors = listOf("Red", "Blue", "Green")
+                SegmentedControl(
+                    items = colors,
+                    defaultSelectedItemIndex = -1,
+                    cornerRadius = 48,
+                    color = R.color.purple_500,
+                    onItemSelection = {
+
+                        colorMain = when (it) {
+                            0 -> Color.Red
+                            1 -> Color.Blue
+                            else -> Color.Green
+                        }
+                    })
             }
         }
     }
