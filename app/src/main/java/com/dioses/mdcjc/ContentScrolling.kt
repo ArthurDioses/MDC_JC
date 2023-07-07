@@ -9,10 +9,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -157,7 +161,7 @@ fun Content(modifier: Modifier = Modifier) {
                         modifier = Modifier.padding(end = dimensionResource(id = R.dimen.common_padding_min))
                     )
                 }
-                var context = LocalContext.current
+                val context = LocalContext.current
                 var sliderValue by remember { mutableStateOf(6f) }
                 Slider(
                     value = sliderValue,
@@ -171,6 +175,25 @@ fun Content(modifier: Modifier = Modifier) {
                     valueRange = 0f..10f,
                     steps = 4
                 )
+                val emailValue by remember { mutableStateOf("adioses@gmail.com") }
+                var chipVisible by remember { mutableStateOf(true) }
+                if (chipVisible) {
+                    AssistChip(
+                        onClick = {
+                            chipVisible = false
+                        },
+                        modifier = Modifier.padding(start = dimensionResource(id = R.dimen.common_padding_default)),
+                        label = { Text(text = emailValue) },
+                        leadingIcon = {
+                            Icon(
+                                Icons.Filled.Close,
+                                null,
+                                Modifier.size(AssistChipDefaults.IconSize),
+                            )
+                        }
+                    )
+                }
+
             }
         }
     }
