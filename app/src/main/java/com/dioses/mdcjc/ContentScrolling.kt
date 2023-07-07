@@ -18,6 +18,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -154,6 +155,16 @@ fun Content(modifier: Modifier = Modifier) {
                         modifier = Modifier.padding(end = dimensionResource(id = R.dimen.common_padding_min))
                     )
                 }
+                var sliderValue by remember { mutableStateOf(6f) }
+                Slider(
+                    value = sliderValue,
+                    onValueChange = {
+                        sliderValue = it
+                        urlValue = "Vol: ${it.toInt()}"
+                    },
+                    valueRange = 0f..10f,
+                    steps = 4
+                )
             }
         }
     }
