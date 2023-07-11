@@ -1,6 +1,7 @@
 package com.dioses.mdcjc
 
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
@@ -27,6 +29,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -43,8 +47,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.dioses.mdcjc.ui.theme.MDCJCTheme
@@ -64,6 +72,40 @@ fun Content(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Column {
+                val image = ContextCompat.getDrawable(LocalContext.current, R.mipmap.ic_launcher)
+                Image(
+                    bitmap = image!!.toBitmap().asImageBitmap(), contentDescription = null
+                )
+                Button(onClick = { /*TODO*/ }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_shop),
+                        contentDescription = null
+                    )
+                    Text(text = stringResource(id = R.string.card_btn_buy))
+                }
+                TextButton(onClick = { /*TODO*/ }) {
+                    Text(text = stringResource(id = R.string.card_btn_skip))
+                }
+                Text(
+                    text = stringResource(id = R.string.card_title),
+                    style = MaterialTheme.typography.headlineSmall,
+                    textAlign = TextAlign.Start
+                )
+                Text(
+                    text = stringResource(id = R.string.large_text),
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Start,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+        }
         var colorMain by remember { mutableStateOf(Color.LightGray) }
         Card(
             modifier = Modifier
@@ -149,8 +191,7 @@ fun Content(modifier: Modifier = Modifier) {
                             })
                     })
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Checkbox(
-                        checked = isCheckboxChecked,
+                    Checkbox(checked = isCheckboxChecked,
                         onCheckedChange = { isCheckboxChecked = it })
                     Text(text = stringResource(id = R.string.card_enable_pass))
 
@@ -167,25 +208,19 @@ fun Content(modifier: Modifier = Modifier) {
                 }
                 val context = LocalContext.current
                 var sliderValue by remember { mutableStateOf(6f) }
-                Slider(
-                    value = sliderValue,
-                    onValueChange = {
-                        sliderValue = it
-                        urlValue = "Vol: ${it.toInt()}"
-                    },
-                    onValueChangeFinished = {
-                        Toast.makeText(context, "Vol: $sliderValue", Toast.LENGTH_SHORT).show()
-                    },
-                    valueRange = 0f..10f,
-                    steps = 4
+                Slider(value = sliderValue, onValueChange = {
+                    sliderValue = it
+                    urlValue = "Vol: ${it.toInt()}"
+                }, onValueChangeFinished = {
+                    Toast.makeText(context, "Vol: $sliderValue", Toast.LENGTH_SHORT).show()
+                }, valueRange = 0f..10f, steps = 4
                 )
                 val emailValue by remember { mutableStateOf("adioses@gmail.com") }
                 var chipVisible by remember { mutableStateOf(true) }
                 if (chipVisible) {
-                    AssistChip(
-                        onClick = {
-                            chipVisible = false
-                        },
+                    AssistChip(onClick = {
+                        chipVisible = false
+                    },
                         modifier = Modifier.padding(start = dimensionResource(id = R.dimen.common_padding_default)),
                         label = { Text(text = emailValue) },
                         leadingIcon = {
@@ -194,8 +229,7 @@ fun Content(modifier: Modifier = Modifier) {
                                 null,
                                 Modifier.size(AssistChipDefaults.IconSize),
                             )
-                        }
-                    )
+                        })
                 }
 
                 Divider(
@@ -205,8 +239,7 @@ fun Content(modifier: Modifier = Modifier) {
                 )
 
                 val colors = listOf("Red", "Blue", "Green")
-                SegmentedControl(
-                    items = colors,
+                SegmentedControl(items = colors,
                     defaultSelectedItemIndex = -1,
                     cornerRadius = 48,
                     color = R.color.purple_500,

@@ -22,4 +22,5 @@
     <string name="text_hint_email">Email</string>
     <string name="card_hide_fab">Hide Fab</string>
     <string name="card_show_fab">Show Fab</string>
+    <string name="large_text">Texto largo para mostrar en una Text en compose y se vea bien sin tener que colocar manualmente los tres puntos de elipsis, asimismo se coloca tres como lineas máximas</string>
 </resources>
