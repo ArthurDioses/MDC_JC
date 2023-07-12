@@ -7,6 +7,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -51,6 +53,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -77,21 +81,49 @@ fun Content(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
-            Column {
+            ConstraintLayout(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = dimensionResource(id = R.dimen.common_padding_default),
+                        end = dimensionResource(id = R.dimen.common_padding_default),
+                        top = dimensionResource(id = R.dimen.common_padding_default)
+                    )
+
+            ) {
+                val (imgCard, btnBuy, btnSkip, tvTitle, tvContent) = createRefs()
                 val image = ContextCompat.getDrawable(LocalContext.current, R.mipmap.ic_launcher)
                 Image(
-                    bitmap = image!!.toBitmap().asImageBitmap(), contentDescription = null
+                    bitmap = image!!.toBitmap().asImageBitmap(),
+                    contentDescription = null,
+                    modifier = Modifier.constrainAs(imgCard) {
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                    }
                 )
-                Button(onClick = { /*TODO*/ }) {
+                Button(onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .padding(top = dimensionResource(id = R.dimen.common_padding_min))
+                        .constrainAs(btnBuy) {
+                            end.linkTo(parent.end)
+                            top.linkTo(imgCard.bottom)
+                        }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_shop),
                         contentDescription = null
                     )
                     Text(text = stringResource(id = R.string.card_btn_buy))
                 }
-                TextButton(onClick = { /*TODO*/ }) {
+                TextButton(onClick = { /*TODO*/ },
+                    modifier = Modifier.constrainAs(btnSkip) {
+                        end.linkTo(btnBuy.start)
+                        top.linkTo(btnBuy.top)
+                        bottom.linkTo(btnBuy.bottom)
+                        height = Dimension.fillToConstraints
+                    }) {
                     Text(text = stringResource(id = R.string.card_btn_skip))
                 }
+                /*
                 Text(
                     text = stringResource(id = R.string.card_title),
                     style = MaterialTheme.typography.headlineSmall,
@@ -104,6 +136,7 @@ fun Content(modifier: Modifier = Modifier) {
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis
                 )
+                */
             }
         }
         var colorMain by remember { mutableStateOf(Color.LightGray) }
