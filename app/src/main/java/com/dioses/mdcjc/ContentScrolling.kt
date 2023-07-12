@@ -115,28 +115,45 @@ fun Content(modifier: Modifier = Modifier) {
                     Text(text = stringResource(id = R.string.card_btn_buy))
                 }
                 TextButton(onClick = { /*TODO*/ },
-                    modifier = Modifier.constrainAs(btnSkip) {
-                        end.linkTo(btnBuy.start)
-                        top.linkTo(btnBuy.top)
-                        bottom.linkTo(btnBuy.bottom)
-                        height = Dimension.fillToConstraints
-                    }) {
+                    modifier = Modifier
+                        .padding(top = dimensionResource(id = R.dimen.common_padding_min))
+                        .constrainAs(btnSkip) {
+                            end.linkTo(btnBuy.start)
+                            top.linkTo(btnBuy.top)
+                            bottom.linkTo(btnBuy.bottom)
+                            height = Dimension.fillToConstraints
+                        }) {
                     Text(text = stringResource(id = R.string.card_btn_skip))
                 }
-                /*
                 Text(
                     text = stringResource(id = R.string.card_title),
                     style = MaterialTheme.typography.headlineSmall,
-                    textAlign = TextAlign.Start
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier
+                        .padding(start = dimensionResource(id = R.dimen.common_padding_default))
+                        .constrainAs(tvTitle) {
+                            start.linkTo(imgCard.end)
+                            end.linkTo(parent.end)
+                            top.linkTo(parent.top)
+                            width = Dimension.fillToConstraints
+                        }
                 )
                 Text(
                     text = stringResource(id = R.string.large_text),
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Start,
                     maxLines = 3,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .padding(start = dimensionResource(id = R.dimen.common_padding_default))
+                        .constrainAs(tvContent) {
+                            start.linkTo(imgCard.end)
+                            end.linkTo(parent.end)
+                            top.linkTo(tvTitle.bottom)
+                            bottom.linkTo(imgCard.bottom)
+                            width = Dimension.fillToConstraints
+                        }
                 )
-                */
             }
         }
         var colorMain by remember { mutableStateOf(Color.LightGray) }
